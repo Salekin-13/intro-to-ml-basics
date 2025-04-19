@@ -5,6 +5,9 @@ basics-ml/
 __pycache__/
 *.py[cod]
 
+# Ignore log files
+*.log
+
 # Jupyter notebooks
 .ipynb_checkpoints/
 
