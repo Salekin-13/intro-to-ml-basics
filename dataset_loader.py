@@ -1,5 +1,24 @@
 import tensorflow as tf
 
+def prepare_dataloader(data, batch_size, resize, is_train=True, is_rgb=False):
+    def process(X, y):
+        X = tf.cast(X, tf.float32) / 255.0
+        if is_rgb:
+            X = tf.image.rgb_to_grayscale(X)  # Convert 3 channels to 1
+        else:
+            X = tf.expand_dims(X, axis=3)     # Add channel dim to grayscale (2D -> 3D)
+        y = tf.cast(y, dtype='int32')
+        return X, y
+
+    resize_fn = lambda X, y: (tf.image.resize_with_pad(X, *resize), y)
+
+    X, y = process(*data)
+    dataset = tf.data.Dataset.from_tensor_slices((X, y))
+    shuffle_buf = len(X) if is_train else 1
+
+    return dataset.shuffle(shuffle_buf).map(resize_fn).batch(batch_size)
+
+
 class FashionMNIST():
     def __init__(self, batch_size=64, resize=(28,28)):
         #super().__init__()
@@ -8,23 +27,16 @@ class FashionMNIST():
         self.train_ds, self.test_ds = tf.keras.datasets.fashion_mnist.load_data()
 
     def text_labels(self, indices):
-        labels = ['top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+        flabels = ['top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-        return [labels[int(i)] for i in indices]
+        return [flabels[int(i)] for i in indices]
 
     def get_dataloader(self, train):
         data = self.train_ds if train else self.test_ds
 
-        process = lambda X,y: (tf.expand_dims(tf.cast(X, tf.float32), axis=3)/255.0,
-                               tf.cast(y, dtype='int32'))
-        
-        resize_fn = lambda X,y: (tf.image.resize_with_pad(X, *self.resize), y)
+        return prepare_dataloader(data, self.batch_size, self.resize, is_train=train, is_rgb=False)
+    
 
-        X,y = process(*data)
-        dataset = tf.data.Dataset.from_tensor_slices((X,y))
-        shuffle_buf = len(X) if train else 1
-
-        return dataset.shuffle(shuffle_buf).map(resize_fn).batch(self.batch_size)
     
 
 class CIFAR10():
@@ -35,21 +47,15 @@ class CIFAR10():
         self.train_ds, self.test_ds = tf.keras.datasets.cifar10.load_data()
 
     def text_labels(self, indices):
-        labels = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+        clabels = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-        return [labels[int(i)] for i in indices]
+        return [clabels[int(i)] for i in indices]
     
     def get_dataloader(self, train):
         data = self.train_ds if train else self.test_ds
 
-        process = lambda X,y: (tf.image.rgb_to_grayscale(tf.cast(X, tf.float32))/255.0,
-                               tf.cast(y, dtype='int32'))
-        
-        resize_fn = lambda X,y: (tf.image.resize_with_pad(X, *self.resize), y)
-
-        X,y = process(*data)
-        dataset = tf.data.Dataset.from_tensor_slices((X,y))
-        shuffle_buf = len(X) if train else 1
-
-        return dataset.shuffle(shuffle_buf).map(resize_fn).batch(self.batch_size)
+        return prepare_dataloader(data, self.batch_size, self.resize, is_train=train, is_rgb=True)
     
+    
+
+
