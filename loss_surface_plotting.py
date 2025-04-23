@@ -21,11 +21,11 @@ class PlotLoss():
         self.batch_x, self.batch_y = next(iter(data.unbatch().batch(batch_size)))
     
 
-    def calculateLoss(self, cls_idx=0):
+    def calculateLoss(self, i1, i2, cls_idx=0):
         #choosing 2 indices to plot the loss surface
         flat_w = self.w[:,cls_idx]
         top_indices = np.argsort(np.abs(flat_w))
-        i1,i2 = top_indices[:2]
+        #i1,i2 = self.i1, self.i2
 
         X,Y,Z = setupPlot()
 
