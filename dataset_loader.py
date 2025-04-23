@@ -1,22 +1,27 @@
 import tensorflow as tf
 
 def prepare_dataloader(data, batch_size, resize, is_train=True, is_rgb=False):
+    X,y = data
+    X = tf.cast(X, tf.float32) / 255.0
+    y = tf.cast(y, dtype='int32')
+
+    dataset = tf.data.Dataset.from_tensor_slices((X, y))
+
     def process(X, y):
-        X = tf.cast(X, tf.float32) / 255.0
+        
         if is_rgb:
             X = tf.image.rgb_to_grayscale(X)  # Convert 3 channels to 1
         else:
-            X = tf.expand_dims(X, axis=3)     # Add channel dim to grayscale (2D -> 3D)
-        y = tf.cast(y, dtype='int32')
+            X = tf.expand_dims(X, axis=-1)     # Add channel dim to grayscale (2D -> 3D)
+        
+        X = tf.image.resize_with_pad(X, *resize)
+
         return X, y
 
-    resize_fn = lambda X, y: (tf.image.resize_with_pad(X, *resize), y)
-
-    X, y = process(*data)
-    dataset = tf.data.Dataset.from_tensor_slices((X, y))
+    
     shuffle_buf = len(X) if is_train else 1
 
-    return dataset.shuffle(shuffle_buf).map(resize_fn).batch(batch_size)
+    return dataset.shuffle(shuffle_buf).map(process).batch(batch_size)
 
 
 class FashionMNIST():
@@ -27,7 +32,7 @@ class FashionMNIST():
         self.train_ds, self.test_ds = tf.keras.datasets.fashion_mnist.load_data()
 
     def text_labels(self, indices):
-        flabels = ['top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+        flabels = ['T-shirt', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
         return [flabels[int(i)] for i in indices]
 

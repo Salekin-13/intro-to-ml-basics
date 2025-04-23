@@ -61,13 +61,24 @@ class LogReg():
             penalty='l2'
         )
 
-    def tfLogReg(self, learning_rate=0.001, n_epochs=5, batch_size=64):
+    def tfLogReg(self, reg_type='l2', reg_strength=1e-4, alpha=1e-5, beta=1e-3, learning_rate=0.001, n_epochs=5):
+        tf.keras.backend.clear_session()
+        
+        if reg_type == 'l1':
+            reg = regularizers.l1(reg_strength)
+        elif reg_type == 'l2':
+            reg = regularizers.l2(reg_strength)
+        elif reg_type == 'elastic':
+            reg = regularizers.l1_l2(l1=alpha, l2=beta)
+        else:
+            reg=None
+
         self.tf_model = tf.keras.Sequential([
             tf.keras.Input(shape=self.input_shape),
             tf.keras.layers.Flatten(),
             tf.keras.layers.Dense(self.num_classes, 
                                   activation= 'softmax',
-                                  kernel_regularizer=regularizers.l2(0.001))
+                                  kernel_regularizer=reg)
         ])
 
         self.tf_model.compile(
