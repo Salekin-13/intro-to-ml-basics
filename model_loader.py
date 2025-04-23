@@ -1,6 +1,11 @@
 import tensorflow as tf
 from sklearn.linear_model import LogisticRegressionCV
 from tensorflow.keras import regularizers
+import numpy as np
+
+def set_seed(seed_value):
+    np.random.seed(seed_value)
+    tf.random.set_seed(seed_value)
 
 
 def split_large_dataset(dataset, val_ratio=0.2, batch_size=64, total_size=None):
@@ -45,11 +50,15 @@ def split_large_dataset(dataset, val_ratio=0.2, batch_size=64, total_size=None):
 
 
 class LogReg():
-    def __init__(self, input_shape, num_classes):
+    def __init__(self, input_shape, num_classes, seed_value= None):
         self.input_shape = input_shape
         self.num_classes = num_classes
         self.sk_model = None
         self.tf_model = None
+
+        if seed_value is not None:
+            set_seed(seed_value)
+            self.seed_value = seed_value
 
     def skLogReg(self):
         self.sk_model = LogisticRegressionCV(
@@ -61,9 +70,9 @@ class LogReg():
             penalty='l2'
         )
 
-    def tfLogReg(self, reg_type='l2', reg_strength=1e-4, alpha=1e-5, beta=1e-3, learning_rate=0.001, n_epochs=5):
+    def tfLogReg(self, reg_type=None, reg_strength=1e-4, alpha=1e-5, beta=1e-3, learning_rate=0.001, n_epochs=5):
         tf.keras.backend.clear_session()
-        
+
         if reg_type == 'l1':
             reg = regularizers.l1(reg_strength)
         elif reg_type == 'l2':
@@ -78,7 +87,9 @@ class LogReg():
             tf.keras.layers.Flatten(),
             tf.keras.layers.Dense(self.num_classes, 
                                   activation= 'softmax',
-                                  kernel_regularizer=reg)
+                                  kernel_regularizer=reg,
+                                  kernel_initializer=tf.keras.initializers.GlorotUniform(seed=self.seed_value)  # Seed for weight initialization
+                                  )
         ])
 
         self.tf_model.compile(

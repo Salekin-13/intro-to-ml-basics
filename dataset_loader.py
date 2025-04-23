@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def prepare_dataloader(data, batch_size, resize, is_train=True, is_rgb=False):
+def prepare_dataloader(data, batch_size, resize, is_train=True, is_rgb=False, seed=None):
     X,y = data
     X = tf.cast(X, tf.float32) / 255.0
     y = tf.cast(y, dtype='int32')
@@ -18,17 +18,20 @@ def prepare_dataloader(data, batch_size, resize, is_train=True, is_rgb=False):
 
         return X, y
 
-    
-    shuffle_buf = len(X) if is_train else 1
+    if is_train:
+        shuffle_buf = len(X)
+        dataset.shuffle(shuffle_buf,seed=seed)
 
-    return dataset.shuffle(shuffle_buf).map(process).batch(batch_size)
+    return dataset.map(process).batch(batch_size).prefetch(tf.data.AUTOTUNE)
 
 
 class FashionMNIST():
-    def __init__(self, batch_size=64, resize=(28,28)):
+    def __init__(self, batch_size=64, resize=(28,28), seed=None):
         #super().__init__()
         self.batch_size = batch_size
         self.resize = resize
+        self.seed = seed
+
         self.train_ds, self.test_ds = tf.keras.datasets.fashion_mnist.load_data()
 
     def text_labels(self, indices):
@@ -39,15 +42,16 @@ class FashionMNIST():
     def get_dataloader(self, train):
         data = self.train_ds if train else self.test_ds
 
-        return prepare_dataloader(data, self.batch_size, self.resize, is_train=train, is_rgb=False)
+        return prepare_dataloader(data, self.batch_size, self.resize, is_train=train, is_rgb=False, seed=self.seed)
     
 
     
 
 class CIFAR10():
-    def __init__(self, batch_size=64, resize=(28,28)):
+    def __init__(self, batch_size=64, resize=(28,28), seed=None):
         self.batch_size = batch_size
         self.resize = resize
+        self.seed = seed
 
         self.train_ds, self.test_ds = tf.keras.datasets.cifar10.load_data()
 
@@ -59,7 +63,7 @@ class CIFAR10():
     def get_dataloader(self, train):
         data = self.train_ds if train else self.test_ds
 
-        return prepare_dataloader(data, self.batch_size, self.resize, is_train=train, is_rgb=True)
+        return prepare_dataloader(data, self.batch_size, self.resize, is_train=train, is_rgb=True, seed=self.seed)
     
     
 
