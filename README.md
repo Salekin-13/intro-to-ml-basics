@@ -9,16 +9,15 @@ This project demonstrates foundational classification workflows using Logistic R
 ```bash
 intro-to-ml-basics/
 ├── scripts/              # All reusable Python modules
-│   ├── data_utils.py
-│   ├── models.py
-│   └── train.py
+│   ├── dataset_loader.py
+│   ├── dying_neuron_test.py
+│   ├── loss_surface_plotting.py
+│   └── model_loader.py
 ├── notebooks/            # Interactive experiments and visualizations
-│   ├── 01_logistic_regression.ipynb
-│   └── 02_mlp_classifier.ipynb
-├── results/              # Saved plots and trained model files
+│   ├── logistic_regression_performance.ipynb
+│   └── classification_with_MLP.ipynb
 ├── requirements.txt
-├── README.md
-└── setup.py
+└── README.md
 ```
 
 ---
