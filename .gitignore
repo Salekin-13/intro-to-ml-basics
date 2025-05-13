@@ -1,9 +1,19 @@
 # Virtual environment
 basics-ml/
+tf210/
+
+# Ignore any accidentally copied conda base env
+miniconda3/
+base/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
 
 # Python cache
 __pycache__/
+.pytest_cache/
 *.py[cod]
+*.so
 
 # Ignore log files
 *.log
@@ -13,6 +23,28 @@ __pycache__/
 
 # VSCode settings
 .vscode/
+
+# Data and model artifacts
+*.h5
+*.keras
+*.ckpt
+*.pb
+*.tflite
+*.log
+
+# TensorBoard logs
+logs/
+events.out.*
+
+# Saved model directories
+saved_model/
+models/
+checkpoints/
+
+# Temporary files
+*.tmp
+*.swp
+.DS_Store
 
 # System files
 .DS_Store
