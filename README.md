@@ -39,8 +39,7 @@ intro-to-ml-basics/
 | ------------------- | ------------- | ----------------------------------------- |
 | Logistic Regression |  FMNIST       | Linear classifier with Softmax activation |
 | MLP (single layer)  | FMNIST, CIFAR | ReLU, Softmax, Early Stopping             |
-| MLP (3 layers)      | FMNIST, CIFAR | He Normal initialization, Leaky ReLU, 
-                                        Dropout, Softmax, L2 regularization       |
+| MLP (3 layers)      | FMNIST, CIFAR | He Normal initialization, Leaky ReLU, Dropout, Softmax, L2 regularization       |
 
 ---
 
@@ -50,9 +49,8 @@ Here are the Performance metrics and training/validation curves:
 
 | Model               | Dataset | Accuracy | Notes               |
 | ------------------- | ------- | -------- | ------------------- |
-| Logistic Regression | FMNIST | \~84.59% | Simple linear model |
- (w\o Regularization) |
-| ------------------- | ------- | -------- | ------------------- |
+| Logistic Regression (w\o Regularization) | FMNIST | \~84.59% | Simple linear model |
+
 | Logistic Regression | 
  (l2 Regularization & | FMNIST  | \~81.92% | Impose Prior Bias & |
   Early callback)     |                      Stop Overfitting
