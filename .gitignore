@@ -37,7 +37,7 @@ logs/
 events.out.*
 
 # Saved model directories
-saved_model/
+saved_models/
 models/
 checkpoints/
 
