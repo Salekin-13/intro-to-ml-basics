@@ -51,15 +51,13 @@ Here are the Performance metrics and training/validation curves:
 | ------------------- | ------- | -------- | ------------------- |
 | Logistic Regression (w\o Regularization) | FMNIST | \~84.59% | Simple linear model |
 
-| Logistic Regression | 
- (l2 Regularization & | FMNIST  | \~81.92% | Impose Prior Bias & |
-  Early callback)     |                      Stop Overfitting
-| ------------------- | ------- | -------- | ------------------- |
+| Logistic Regression (l2 Regularization & Early callback) | FMNIST  | \~81.92% | Impose Prior Bias & Stop Overfitting through Early Stopping|
+
 | MLP (1-layer)       | FMNIST  | \~88.26% | Better nonlinearity |
-                      | CIFAR   | \~46.95% | Underfit model      |
-| ------------------- | ------- | -------- | ------------------- |
-| MLP (3-layers,      | FMNIST  | \~88.46% | Similar Performance |
-       & Dropout)     | CIFAR   | \~57.34% | Struggle to fit data|
+|                      | CIFAR   | \~46.95% | Underfit model      |
+
+| MLP (3-layers & Dropout)       | FMNIST  | \~88.46% | Similar Performance |
+|                 | CIFAR   | \~57.34% | Struggle to fit data|
 
 > 📈 Training & validation accuracy, most relevant pixels, and loss curves are visualized in the notebooks under `/notebooks`.
 
