@@ -1,0 +1,19 @@
+experiment:
+  name: "mlp_classification_experiment"
+  seed: 21
+  epochs: 100
+  batch_size: 32
+  resize: [28, 28]
+
+dataset:
+  name: "FashionMNIST"  # or "CIFAR10"
+  validation_split: 0.2
+
+model:
+  type: "MLP"
+  hidden_layers: [512, 256, 128]
+  activation: "relu"
+  output_activation: "softmax"
+  loss: "sparse_categorical_crossentropy"
+  optimizer: "adam"
+  metrics: ["accuracy"]
