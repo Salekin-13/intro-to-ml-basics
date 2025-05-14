@@ -1,6 +1,6 @@
 # 🧠 ML Basics Showcase: Logistic Regression & MLP Classifiers
 
-This project is to demonstrate foundational classification workflows using Logistic Regression and Multi-Layer Perceptron (MLP) on benchmark datasets like Fashion-MNIST and CIFAR-10. It is designed as an introduction to deep learning curriculum to highlight knowledge of key machine learning concepts through hands-on training, evaluation, and visualization.
+This project is to demonstrate foundational image classification workflows using Logistic Regression and Multi-Layer Perceptron (MLP) on benchmark datasets like Fashion-MNIST and CIFAR-10. It is designed as an introduction to deep learning and to highlight key concepts of machine learning algorithms through hands-on training, evaluation, and visualization. It also visualizes the most significant weights/inputs for logistic regression and maps out the loss curve to understand model convergence.
 
 ---
 
@@ -52,9 +52,9 @@ Here are the Performance metrics and training/validation curves:
 | Logistic Regression (w\o Regularization) | FMNIST | \~84.59% | Simple linear model |
 | Logistic Regression (l2 Regularization & Early callback) | FMNIST  | \~81.92% | Impose Prior Bias & Stop Overfitting through Early Stopping|
 | MLP (1-layer)       | FMNIST  | \~88.26% | Better nonlinearity |
-|    ---                  | CIFAR   | \~46.95% | Underfit model      |
+|                      | CIFAR   | \~46.95% | Underfit model      |
 | MLP (3-layers & Dropout)       | FMNIST  | \~88.46% | Similar Performance |
-|    ---             | CIFAR   | \~57.34% | Struggle to fit data|
+|                 | CIFAR   | \~57.34% | Struggle to fit data|
 
 > 📈 Training & validation accuracy, most relevant pixels, and loss curves are visualized in the notebooks under `/notebooks`.
 
@@ -63,9 +63,9 @@ Here are the Performance metrics and training/validation curves:
 ## 🔍 Key Takeaways
 
 * Logistic regression can perform relatively well on simpler datasets like FMNIST.
-* MLPs can model more complex decision boundaries with hidden layers but still struggles with more complex data like RGB images in CIFAR-10
-* Dropout and L2 regularization are helpful in reducing overfitting, especially for deeper models.
+* MLPs can model more complex decision boundaries with hidden layers but still struggles with complex data like RGB images in CIFAR-10.
 * Proper parameter initialization helps avoid vanishing and exploding gradients.
+* Dropout and L2 regularization are helpful in reducing overfitting, especially for deeper models.
 
 ---
 
