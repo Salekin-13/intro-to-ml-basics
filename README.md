@@ -69,6 +69,12 @@ Here are the Performance metrics and training/validation curves:
 
 ---
 
+## ⚙ Trainable Model Params
+
+* The shallow MLP model has 604938 trainable params.
+* and, The deeper MLP model has 3071754 trainable params.
+* Higher number of parameter indicates increased model capacity.
+
 ## 🚀 Setup Instructions
 
 ### 1. Clone the repository
