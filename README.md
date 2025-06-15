@@ -66,6 +66,7 @@ Here are the Performance metrics and training/validation curves:
 * MLPs can model more complex decision boundaries with hidden layers but still struggles with complex data like RGB images in CIFAR-10.
 * Proper parameter initialization helps avoid vanishing and exploding gradients.
 * Dropout and L2 regularization are helpful in reducing overfitting, especially for deeper models.
+* The concept of Bias-Variance trade-off is also explored for the deep MLP model.
 
 ---
 
