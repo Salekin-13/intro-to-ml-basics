@@ -28,7 +28,7 @@ intro-to-ml-basics/
 * Implement logistic regression and MLP from scratch using Tensorflow
 * Train on Fashion-MNIST/CIFAR datasets
 * Visualize training and validation performance
-* Understand underfitting vs overfitting
+* Understand underfitting vs overfitting, and the bias-variance tradeoff
 * Apply techniques like initialization, regularization and dropout
 
 ---
@@ -112,3 +112,9 @@ pip install -r requirements.txt
 
 Made by \[Sumaiya Salekin]
 Inspired by classic ML fundamentals 🌱
+
+## 📚 References
+
+- MLU-Explain. *Bias-Variance Tradeoff*. [https://mlu-explain.github.io/bias-variance/](https://mlu-explain.github.io/bias-variance/)
+- Zhang, A., Lipton, Z. C., Li, M., & Smola, A. J. *Dive into Deep Learning*. [https://d2l.ai](https://d2l.ai)
+
